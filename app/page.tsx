@@ -1,9 +1,0 @@
-export default function Home() {
-  return (
-    <div>
-      <h1 className="h1-bold">Next JS 13 viene y viene arrecho</h1>
-      <h2 className="h2-bold">Next JS 13 viene y viene arrecho</h2>
-      <h3 className="h3-bold">Next JS 13 viene y viene arrecho</h3>
-    </div>
-  );
-}
