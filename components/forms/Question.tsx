@@ -22,8 +22,9 @@ import { QuestionsSchema } from "@/lib/validations";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
-import { fileURLToPath } from "url";
+// import { fileURLToPath } from "url";
 import { useRouter, usePathname } from "next/navigation";
+// import { type } from "os";
 
 const type: any = "create";
 
@@ -57,12 +58,13 @@ const Question = ({ mongoUserId }: Props) => {
         content: values.explanation,
         tags: values.tags,
         author: JSON.parse(mongoUserId),
-        //  path: pathname
+        path: pathname,
       });
 
       // navigate to homepage
       router.push("/");
     } catch (error) {
+      console.log(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -209,9 +211,7 @@ const Question = ({ mongoUserId }: Props) => {
                         <Badge
                           key={tag}
                           className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
-                          onClick={() => {
-                            handleTagRemove(tag, field);
-                          }}
+                          onClick={() => handleTagRemove(tag, field)}
                         >
                           {tag}
                           <Image

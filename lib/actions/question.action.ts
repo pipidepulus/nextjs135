@@ -4,14 +4,26 @@ import { connectToDatabase } from "../mongoose";
 import Question from "@/database/question.model";
 import { revalidatePath } from "next/cache";
 import Tag from "@/database/tag.model";
-import {
-  CreateQuestionParams,
-  GetQuestionByIdParams,
-  GetQuestionsParams,
-} from "@/lib/actions/shared.types";
+import { CreateQuestionParams, GetQuestionsParams } from "./shared.types";
 import User from "@/database/user.model";
 
-export async function createQuestion(params: any) {
+export async function getQuestions(params: GetQuestionsParams) {
+  try {
+    await connectToDatabase();
+
+    const questions = await Question.find({})
+      .populate({ path: "tags", model: Tag })
+      .populate({ path: "author", model: User })
+      .sort({ createdAt: -1 });
+
+    return { questions };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function createQuestion(params: CreateQuestionParams) {
   try {
     await connectToDatabase();
 
