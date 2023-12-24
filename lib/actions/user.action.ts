@@ -5,6 +5,7 @@ import User from "@/database/user.model";
 import {
   CreateUserParams,
   DeleteUserParams,
+  GetAllUsersParams,
   UpdateUserParams,
 } from "./shared.types";
 import { useParams } from "next/navigation";
@@ -79,3 +80,32 @@ export async function deleteUser(params: DeleteUserParams) {
     throw error;
   }
 }
+
+export async function getAllUsers(params: GetAllUsersParams) {
+  try {
+    await connectToDatabase();
+
+    // const { page = 1, pageSize = 20, filter, searchQuery } = params;
+
+    const users = await User.find({}).sort({ createdAt: -1 });
+    return { users };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+// export async function getAllUsers(params: GetAllUsersParams) {
+//   try {
+//     await connectToDatabase();
+
+//     // const { page - 1, pageSize - 1, filter, searchQuery } = params;
+
+//     const users = await User.find();
+//       .sort({ createdAt: -1 })
+//     return users;
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// }
