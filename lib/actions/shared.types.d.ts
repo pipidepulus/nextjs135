@@ -14,6 +14,8 @@ export interface GetAnswersParams {
   sortBy?: string;
   page?: number;
   pageSize?: number;
+  userId: string;
+  filter?: string;
 }
 
 export interface AnswerVoteParams {
