@@ -8,6 +8,7 @@ import {
   CreateQuestionParams,
   GetQuestionByIdParams,
   GetQuestionsParams,
+  QuestionVoteParams,
 } from "./shared.types";
 import User from "@/database/user.model";
 
@@ -68,6 +69,86 @@ export async function getQuestionById(params: GetQuestionByIdParams) {
         model: User,
         select: "_id clerkId name picture",
       });
+
+    return question;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function upvoteQuestion(params: QuestionVoteParams) {
+  try {
+    await connectToDatabase();
+
+    const { questionId, userId, hasupVoted, hasdownVoted, path } = params;
+
+    let updateQuery = {};
+
+    if (hasupVoted) {
+      updateQuery = {
+        $pull: { upvotes: userId },
+        // $inc: { upvotesCount: -1 },
+      };
+    } else if (hasdownVoted) {
+      updateQuery = {
+        $push: { upvotes: userId },
+        $pull: { downvotes: userId },
+        // $inc: { upvotesCount: 1 },
+      };
+    } else {
+      updateQuery = { $addToSet: { upvotes: userId } };
+    }
+
+    const question = await Question.findByIdAndUpdate(questionId, updateQuery, {
+      new: true,
+    });
+
+    if (!question) throw new Error("Question not found");
+
+    // Increment author's reputation
+
+    revalidatePath(path);
+
+    return question;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function downvoteQuestion(params: QuestionVoteParams) {
+  try {
+    await connectToDatabase();
+
+    const { questionId, userId, hasupVoted, hasdownVoted, path } = params;
+
+    let updateQuery = {};
+
+    if (hasdownVoted) {
+      updateQuery = {
+        $pull: { downvotes: userId },
+        // $inc: { upvotesCount: -1 },
+      };
+    } else if (hasupVoted) {
+      updateQuery = {
+        $push: { downvotes: userId },
+        $pull: { upvotes: userId },
+        // $inc: { upvotesCount: 1 },
+      };
+    } else {
+      updateQuery = { $addToSet: { downvotes: userId } };
+    }
+
+    const question = await Question.findByIdAndUpdate(questionId, updateQuery, {
+      new: true,
+    });
+
+    if (!question) throw new Error("Question not found");
+
+    // Increment author's reputation
+
+    revalidatePath(path);
 
     return question;
   } catch (error) {

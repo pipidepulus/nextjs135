@@ -4,10 +4,10 @@ import React, { useRef, useState } from "react";
 import {
   Form,
   FormControl,
-  FormDescription,
+  // FormDescription,
   FormField,
   FormItem,
-  FormLabel,
+  // FormLabel,
   FormMessage,
 } from "../ui/form";
 import { useForm } from "react-hook-form";
@@ -72,7 +72,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
         </h4>
 
         <Button
-          className="btn light-border-2 gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none dark:text-p"
+          className="btn light-border-2 dark:text-p gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none"
           onClick={() => {}}
         >
           <Image

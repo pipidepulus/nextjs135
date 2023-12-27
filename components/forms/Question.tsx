@@ -210,7 +210,7 @@ const Question = ({ mongoUserId }: Props) => {
                   />
 
                   {field.value.length > 0 && (
-                    <div className="flex flex-wrap mt-2.5 gap-2.5">
+                    <div className="mt-2.5 flex flex-wrap gap-2.5">
                       {field.value.map((tag: any) => (
                         <Badge
                           key={tag}

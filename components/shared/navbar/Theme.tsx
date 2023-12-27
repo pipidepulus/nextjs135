@@ -12,7 +12,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { themes } from "@/constants";
-import { Item } from "@radix-ui/react-menubar";
+// import { Item } from "@radix-ui/react-menubar";
 
 const Theme = () => {
   const { mode, setMode } = useTheme();
@@ -20,7 +20,7 @@ const Theme = () => {
   return (
     <Menubar className="relative border-none bg-transparent shadow-none">
       <MenubarMenu>
-        <MenubarTrigger className="focus:bg-light-900 data-[state-open]:bg-light-900 dark:focus:bg-dark-200 dark:data[state-open]:bg-dark-200">
+        <MenubarTrigger className="dark:data[state-open]:bg-dark-200 focus:bg-light-900 data-[state-open]:bg-light-900 dark:focus:bg-dark-200">
           {mode === "light" ? (
             <Image
               src="/assets/icons/sun.svg"
@@ -43,7 +43,7 @@ const Theme = () => {
           {themes.map((item) => (
             <MenubarItem
               key={item.value}
-              className="dark:focus:bg-dark-400 flex items-center gap-4 px-2.5 py-2"
+              className="flex items-center gap-4 px-2.5 py-2 dark:focus:bg-dark-400"
               onClick={() => {
                 setMode(item.value);
 
