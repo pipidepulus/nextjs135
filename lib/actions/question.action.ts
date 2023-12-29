@@ -44,7 +44,7 @@ export async function createQuestion(params: CreateQuestionParams) {
     for (const tag of tags) {
       const existingTag = await Tag.findOneAndUpdate(
         { name: { $regex: new RegExp(`^${tag}$`, "i") } },
-        { $setOnInsert: { name: tag }, $push: { question: question._id } },
+        { $setOnInsert: { name: tag }, $push: { questions: question._id } },
         { upsert: true, new: true }
       );
       tagDocuments.push(existingTag._id);
@@ -88,13 +88,11 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
     if (hasupVoted) {
       updateQuery = {
         $pull: { upvotes: userId },
-        // $inc: { upvotesCount: -1 },
       };
     } else if (hasdownVoted) {
       updateQuery = {
-        $push: { upvotes: userId },
         $pull: { downvotes: userId },
-        // $inc: { upvotesCount: 1 },
+        $push: { upvotes: userId },
       };
     } else {
       updateQuery = { $addToSet: { upvotes: userId } };
@@ -128,13 +126,11 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     if (hasdownVoted) {
       updateQuery = {
         $pull: { downvotes: userId },
-        // $inc: { upvotesCount: -1 },
       };
     } else if (hasupVoted) {
       updateQuery = {
-        $push: { downvotes: userId },
         $pull: { upvotes: userId },
-        // $inc: { upvotesCount: 1 },
+        $push: { downvotes: userId },
       };
     } else {
       updateQuery = { $addToSet: { downvotes: userId } };
