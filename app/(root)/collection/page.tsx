@@ -5,7 +5,6 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { QuestionFilters } from "@/constants/filters";
 import { getSavedQuestions } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
-import { Key } from "react";
 
 export default async function Collection() {
   const { userId } = auth();
@@ -36,35 +35,19 @@ export default async function Collection() {
 
       <div className="mt-10 flex w-full flex-col gap-6">
         {result?.questions.length > 0 ? (
-          result?.questions.map(
-            (question: {
-              _id: Key | null | undefined;
-              title: string;
-              tags: { _id: string; name: string }[];
-              author: {
-                _id: string;
-                clerkId: string;
-                name: string;
-                picture: string;
-              };
-              upVotes: object[];
-              views: number;
-              answers: object[];
-              createdAt: Date;
-            }) => (
-              <QuestionCard
-                key={question._id}
-                _id={question._id as string}
-                title={question.title}
-                tags={question.tags}
-                author={question.author}
-                upvotes={question.upVotes}
-                views={question.views}
-                answers={question.answers}
-                createdAt={question.createdAt}
-              />
-            )
-          )
+          result?.questions.map((question: any) => (
+            <QuestionCard
+              key={question._id}
+              _id={question._id}
+              title={question.title}
+              tags={question.tags}
+              author={question.author}
+              upvotes={question.upVotes}
+              views={question.views}
+              answers={question.answers}
+              createdAt={question.createdAt}
+            />
+          ))
         ) : (
           <NoResult
             title="There is no saved questions to show"
