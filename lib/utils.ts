@@ -1,5 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
+// import { from } from "svix/dist/openapi/rxjsStub";
 import { twMerge } from "tailwind-merge";
+// import { object, string } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -49,7 +51,7 @@ export const formatAndDivideNumber = (num: number) => {
     const formattedNum = (num / 1000).toFixed(1);
     return `${formattedNum}K`;
   } else {
-    return num;
+    return num.toString();
   }
 };
 
