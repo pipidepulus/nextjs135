@@ -14,7 +14,7 @@ const Page = async ({ params }: ParamsProps) => {
     <>
       <h1 className="h1-bold text-dark100_light900">Edit Question</h1>
       <div className="mt-9">
-        <Profile clearkId={userId} user={JSON.stringify(mongoUser)} />
+        <Profile clerkId={userId} user={JSON.stringify(mongoUser)} />
       </div>
     </>
   );
