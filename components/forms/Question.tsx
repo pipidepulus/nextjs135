@@ -31,9 +31,10 @@ interface Props {
   type: string;
   mongoUserId: string;
   questionDetails?: string;
+  tag?: string[];
 }
 
-const Question = ({ type, mongoUserId, questionDetails }: Props) => {
+const Question = ({ type, mongoUserId, questionDetails, tag }: Props) => {
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -61,13 +62,13 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
     try {
       if (type === "Edit") {
         await editQuestion({
-          questionId: parseQuestionDetails._id,
+          questionId: parsedQuestionDetails._id,
           title: values.title,
           content: values.explanation,
           path: pathname,
         });
 
-        router.push(`/question/${parseQuestionDetails._id}`);
+        router.push(`/question/${parsedQuestionDetails._id}`);
       } else {
         await createQuestion({
           title: values.title,
