@@ -73,9 +73,9 @@ export async function deleteUser(params: DeleteUserParams) {
     }
 
     // Delete all questions ids created by this user
-    const userQuestionIds = await Question.find({ author: user._id }).distinct(
-      "_id"
-    );
+    // const userQuestionId = await Question.find({ author: user._id }).distinct(
+    //   "_id"
+    // );
 
     // delete user questions
     await Question.deleteMany({ author: user._id });
@@ -314,7 +314,7 @@ export async function getUserInfo(params: GetUserByIdParams) {
       totalQuestions,
       totalAnswers,
       badgeCounts,
-      // reputation: user.reputation,
+      reputation: user.reputation,
     };
   } catch (error) {
     console.log(error);
