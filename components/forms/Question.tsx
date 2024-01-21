@@ -25,7 +25,6 @@ import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 // import { fileURLToPath } from "url";
 import { useRouter, usePathname } from "next/navigation";
 import { useTheme } from "@/context/ThemeProvider";
-// import { type } from "os";
 
 interface Props {
   type: string;
@@ -43,7 +42,7 @@ const Question = ({ type, mongoUserId, questionDetails, tag }: Props) => {
 
   const parsedQuestionDetails =
     questionDetails && JSON.parse(questionDetails || "");
-  const groupedTags = parsedQuestionDetails?.tags.map((tag) => tag.name);
+  const groupedTags = parsedQuestionDetails?.tags.map((tag: any) => tag.name);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({

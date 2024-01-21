@@ -133,7 +133,7 @@ export async function upvoteAnswer(params: AnswerVoteParams) {
 
     revalidatePath(path);
 
-    return Question;
+    return answer;
   } catch (error) {
     console.log(error);
     throw error;
@@ -177,7 +177,7 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
 
     revalidatePath(path);
 
-    return Question;
+    return answer;
   } catch (error) {
     console.log(error);
     throw error;

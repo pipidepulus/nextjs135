@@ -8,12 +8,13 @@ import {
 import User from "@/database/user.model";
 import Tag, { ITag } from "@/database/tag.model";
 import { FilterQuery } from "mongoose";
+import interaction from "@/database/interaction.model";
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
     await connectToDatabase();
 
-    const { userId, limit } = params;
+    const { userId, limit = 3 } = params;
 
     const user = await User.findById(userId);
 
@@ -21,12 +22,28 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
 
     // Find interactions for the user and group by tags
     // Interaction...
-    return [
-      { _id: "1", name: "tag1" },
-      { _id: "2", name: "tag2" },
-    ];
+    // todo: Find interactions for the user and group by tags
+    const tagCountMap = await interaction.aggregate([
+      { $match: { user: user._id, tags: { $exists: true, $ne: [] } } },
+      { $unwind: "$tags" },
+      { $group: { _id: "$tags", count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: limit },
+    ]);
+
+    // topTags
+    const topTags = tagCountMap.map((tagCount) => tagCount._id);
+
+    // todo : find the tag documents for the top tags
+    const topTagDocuments = await Tag.find({ _id: { $in: topTags } });
+
+    return topTagDocuments;
+    // return [
+    //   { _id: "1", name: "tag1" },
+    //   { _id: "2", name: "tag2" },
+    // ];
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching top interacted tags:", error);
     throw error;
   }
 }
@@ -35,7 +52,7 @@ export async function getAllTags(params: GetAllTagsParams) {
   try {
     await connectToDatabase();
 
-    const { searchQuery, filter, page = 1, pageSize = 5 } = params;
+    const { searchQuery, filter, page = 1, pageSize = 10 } = params;
     const skipAmount = (page - 1) * pageSize;
 
     const query: FilterQuery<typeof Tag> = {};
@@ -82,7 +99,7 @@ export async function getAllTags(params: GetAllTagsParams) {
 
 export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
   try {
-    connectToDatabase();
+    await connectToDatabase();
 
     const { tagId, page = 1, pageSize = 10, searchQuery } = params;
     const skipAmount = (page - 1) * pageSize;

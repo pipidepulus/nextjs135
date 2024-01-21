@@ -9,14 +9,13 @@ import { HomePageFilters } from "@/constants/filters";
 import { getQuestions } from "@/lib/actions/question.action";
 import { SearchParamsProps } from "@/types";
 import Link from "next/link";
-import Loading from "./loading";
 
 import type { Metadata } from "next";
 
-export const  metadata : Metadata = {
- title: "Home | Dev Overflow",
+export const metadata: Metadata = {
+  title: "Home | Dev Overflow",
   description: "Home page of Dev Overflow",
-}
+};
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const result = await getQuestions({
@@ -74,8 +73,8 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           <NoResult
             title="There is no questions to show"
             description="Be the first to break the silence! rocket Ask a question and kickstart
-           the discussion. Our query could be the next big thing others learn from.
-           Get involved! lamp"
+            the discussion. Our query could be the next big thing others learn from.
+            Get involved! lamp"
             link="/ask-question"
             linkTitle="Ask a Question"
           />

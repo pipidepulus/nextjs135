@@ -2,12 +2,10 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import Filter from "@/components/shared/Filter";
 import { TagFilters } from "@/constants/filters";
 import Link from "next/link";
-// import UserCard from "@/components/cards/UserCard";
 import NoResult from "@/components/shared/NoResult";
 import { getAllTags } from "@/lib/actions/tag.actions";
 import { SearchParamsProps } from "@/types";
 import Pagination from "@/components/shared/Pagination";
-// import { Key } from "lucide-react";
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
