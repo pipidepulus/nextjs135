@@ -35,8 +35,18 @@ const Page = async ({ params, searchParams }: URLProps) => {
               key={question._id}
               _id={question._id}
               title={question.title}
-              tags={question.tags}
-              author={question.author}
+              tags={question.tags.map((tag) => ({
+                _id: tag.toString(),
+                name: "",
+              }))}
+              author={
+                question.author as unknown as {
+                  _id: string;
+                  clerkId: string;
+                  name: string;
+                  picture: string;
+                }
+              }
               upvotes={question.upvotes}
               views={question.views}
               answers={question.answers}
