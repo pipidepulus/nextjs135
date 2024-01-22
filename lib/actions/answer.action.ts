@@ -11,9 +11,9 @@ import {
 import Question from "@/database/question.model";
 import { revalidatePath } from "next/cache";
 import interaction from "@/database/interaction.model";
-import { Tag } from "lucide-react";
+// import { Tag } from "lucide-react";
 import User from "@/database/user.model";
-import { auth } from "@clerk/nextjs";
+// import { auth } from "@clerk/nextjs";
 
 export async function createAnswer(params: CreateAnswerParams) {
   try {
